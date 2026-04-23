@@ -30,8 +30,8 @@ export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json();
 
-    const apiKey = process.env.GEMINI_API_KEY;
-    const model = "gemini-2.5-flash";
+    const apiKey = process.env.NVIDIA_API_KEY;
+    const model = "mistralai/mistral-small-4-119b-2603";
 
     if (!apiKey) {
       return NextResponse.json({
@@ -40,31 +40,27 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Convert messages to Gemini format
-    const geminiContents = messages.map((m: { role: string; content: string }) => ({
-      role: m.role === "assistant" ? "model" : "user",
-      parts: [{ text: m.content }],
-    }));
-
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          contents: geminiContents,
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 400,
-          },
-        }),
-      }
-    );
+    const response = await fetch("https://integrate.api.nvidia.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model,
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          ...messages,
+        ],
+        max_tokens: 400,
+        temperature: 0.7,
+        stream: false,
+      }),
+    });
 
     if (!response.ok) {
       const err = await response.text();
-      console.error("Gemini error:", err);
+      console.error("NVIDIA API error:", err);
       return NextResponse.json(
         { error: "AI service unavailable" },
         { status: 502 }
@@ -72,7 +68,7 @@ export async function POST(req: NextRequest) {
     }
 
     const data = await response.json();
-    const content = data.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+    const content = data.choices?.[0]?.message?.content ?? "";
 
     return NextResponse.json({ content });
   } catch (err) {
