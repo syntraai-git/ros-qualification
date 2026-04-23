@@ -200,7 +200,7 @@ export default function QualificationPage() {
   }
 
   return (
-    <main className="relative min-h-screen flex flex-col" style={{ zIndex: 1 }}>
+    <main className="relative min-h-screen flex flex-col items-center" style={{ zIndex: 1 }}>
 
       {/* ── HERO ── */}
       <section className="flex flex-col items-center text-center px-6 pt-12 pb-10 md:pt-20 md:pb-14">
@@ -237,22 +237,22 @@ export default function QualificationPage() {
       </section>
 
       {/* ── DIVIDER ── */}
-      <div className="divider px-8 md:px-20 max-w-3xl lg:max-w-4xl mx-auto w-full mb-10">
+      <div className="divider px-8 md:px-20 max-w-3xl lg:max-w-4xl w-full mb-10">
         ✦ ✦ ✦
       </div>
 
       {/* ── VIDEO ── */}
-      <section className="px-5 md:px-8 max-w-3xl lg:max-w-4xl mx-auto w-full mb-10">
+      <section className="px-5 md:px-8 max-w-3xl lg:max-w-4xl w-full mb-10">
         <VideoPlaceholder />
       </section>
 
       {/* ── DIVIDER ── */}
-      <div className="divider px-8 md:px-20 max-w-3xl lg:max-w-4xl mx-auto w-full mb-10">
+      <div className="divider px-8 md:px-20 max-w-3xl lg:max-w-4xl w-full mb-10">
         ✦ ✦ ✦
       </div>
 
       {/* ── CHAT SECTION ── */}
-      <section className="px-5 md:px-8 max-w-3xl lg:max-w-4xl mx-auto w-full pb-16">
+      <section className="px-5 md:px-8 max-w-3xl lg:max-w-4xl w-full pb-16">
         {/* Section header */}
         <div className="text-center mb-8">
           <h2
