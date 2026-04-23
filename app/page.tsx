@@ -253,6 +253,25 @@ export default function QualificationPage() {
 
       {/* ── CHAT SECTION ── */}
       <section className="px-5 md:px-8 max-w-3xl lg:max-w-4xl w-full pb-16">
+        {/* Notice box */}
+        <div
+          className="rounded-xl px-5 py-4 mb-8 flex gap-4 items-start"
+          style={{
+            background: "linear-gradient(135deg, rgba(201,162,39,0.06), rgba(201,162,39,0.03))",
+            border: "1px solid rgba(201,162,39,0.2)",
+          }}
+        >
+          <span style={{ fontSize: "1.2rem", marginTop: "1px" }}>☽</span>
+          <p
+            className="text-sm md:text-base leading-relaxed"
+            style={{ color: "var(--text-muted)", fontFamily: "var(--font-crimson)" }}
+          >
+            <span style={{ color: "var(--gold-light)", fontWeight: 600 }}>Dieses Gespräch erreicht uns persönlich.</span>
+            {" "}Deine Antworten werden von unserem Beirat gelesen — wir melden uns anschließend direkt bei dir.
+            Das Gespräch ist kein Formular, sondern der erste Schritt zu einer echten Verbindung.
+          </p>
+        </div>
+
         {/* Section header */}
         <div className="text-center mb-8">
           <h2
