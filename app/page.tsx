@@ -63,23 +63,23 @@ function Medallion() {
   );
 }
 
-/* ── Video placeholder ── */
+/* ── Video ── */
 function VideoPlaceholder() {
   return (
     <div
-      className="relative w-full rounded-2xl overflow-hidden flex items-center justify-center"
+      className="relative w-full rounded-2xl overflow-hidden"
       style={{
         aspectRatio: "16/9",
-        background: "linear-gradient(145deg, #0d0912, #110e18)",
+        background: "#000",
         border: "1px solid rgba(201,162,39,0.2)",
-        boxShadow: "0 0 60px rgba(201,162,39,0.06), inset 0 0 60px rgba(0,0,0,0.5)",
+        boxShadow: "0 0 60px rgba(201,162,39,0.06)",
       }}
     >
       {/* Corner ornaments */}
       {["top-3 left-3", "top-3 right-3", "bottom-3 left-3", "bottom-3 right-3"].map((pos, i) => (
         <div
           key={i}
-          className={`absolute ${pos} w-5 h-5`}
+          className={`absolute ${pos} w-5 h-5 z-10`}
           style={{
             borderTop: i < 2 ? "1.5px solid rgba(201,162,39,0.4)" : "none",
             borderBottom: i >= 2 ? "1.5px solid rgba(201,162,39,0.4)" : "none",
@@ -88,28 +88,15 @@ function VideoPlaceholder() {
           }}
         />
       ))}
-
-      {/* Play button */}
-      <div className="flex flex-col items-center gap-4">
-        <div
-          className="w-16 h-16 rounded-full flex items-center justify-center"
-          style={{
-            background: "rgba(201,162,39,0.08)",
-            border: "1px solid rgba(201,162,39,0.25)",
-            boxShadow: "0 0 30px rgba(201,162,39,0.1)",
-          }}
-        >
-          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-            <polygon points="7,4 19,11 7,18" fill="rgba(201,162,39,0.7)" />
-          </svg>
-        </div>
-        <span
-          className="text-xs tracking-[0.4em] uppercase"
-          style={{ color: "rgba(201,162,39,0.3)", fontFamily: "var(--font-cinzel)" }}
-        >
-          Video folgt
-        </span>
-      </div>
+      <video
+        className="w-full h-full object-cover"
+        controls
+        playsInline
+        preload="metadata"
+        style={{ display: "block" }}
+      >
+        <source src="https://wzfkxyyluvkpdvssvnja.supabase.co/storage/v1/object/public/ros-media/pascha-intro.mp4" type="video/mp4" />
+      </video>
     </div>
   );
 }
