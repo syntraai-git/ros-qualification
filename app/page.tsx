@@ -255,7 +255,7 @@ export default function QualificationPage() {
       <section className="px-5 md:px-8 max-w-3xl lg:max-w-4xl w-full pb-16">
         {/* Notice box */}
         <div
-          className="rounded-xl px-5 py-4 mb-8 flex gap-4 items-start"
+          className="rounded-xl px-5 py-4 mb-14 flex gap-4 items-start"
           style={{
             background: "linear-gradient(135deg, rgba(201,162,39,0.06), rgba(201,162,39,0.03))",
             border: "1px solid rgba(201,162,39,0.2)",
