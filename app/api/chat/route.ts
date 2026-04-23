@@ -24,23 +24,23 @@ export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json();
 
-    const apiUrl = process.env.OPENWEBUI_API_URL || "https://chat.gybai.net";
-    const apiKey = process.env.OPENWEBUI_API_KEY;
-    const model = process.env.OPENWEBUI_MODEL || "royal-ottoman-assistent";
+    const apiKey = process.env.OPENROUTER_API_KEY;
+    const model = process.env.OPENROUTER_MODEL || "mistralai/mistral-7b-instruct:free";
 
     if (!apiKey) {
-      // Fallback mock for testing without API key
       return NextResponse.json({
         content:
           "بارك الله فيك — das Gespräch wird gleich verbunden. (API-Key noch nicht konfiguriert — bitte in Vercel Environment Variables setzen.)",
       });
     }
 
-    const response = await fetch(`${apiUrl}/api/chat/completions`, {
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
+        "Authorization": `Bearer ${apiKey}`,
+        "HTTP-Referer": "https://ros-qualification.vercel.app",
+        "X-Title": "Royal Ottoman Society",
       },
       body: JSON.stringify({
         model,
@@ -50,13 +50,12 @@ export async function POST(req: NextRequest) {
         ],
         temperature: 0.7,
         max_tokens: 400,
-        stream: false,
       }),
     });
 
     if (!response.ok) {
       const err = await response.text();
-      console.error("OpenWebUI error:", err);
+      console.error("OpenRouter error:", err);
       return NextResponse.json(
         { error: "AI service unavailable" },
         { status: 502 }
