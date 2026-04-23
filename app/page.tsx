@@ -118,7 +118,7 @@ function VideoPlaceholder() {
 function ChatBubble({ msg }: { msg: Message }) {
   const isAssistant = msg.role === "assistant";
   return (
-    <div className={`msg-appear flex ${isAssistant ? "justify-start" : "justify-end"} gap-2.5`}>
+    <div className={`msg-appear flex ${isAssistant ? "justify-start" : "justify-end"} gap-2.5 md:gap-3`}>
       {isAssistant && (
         <div
           className="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-sm mt-0.5"
@@ -133,7 +133,7 @@ function ChatBubble({ msg }: { msg: Message }) {
         </div>
       )}
       <div
-        className="max-w-[78%] px-4 py-3 text-base leading-relaxed whitespace-pre-wrap"
+        className="max-w-[78%] md:max-w-[72%] px-4 py-3 md:px-5 md:py-3.5 text-base leading-relaxed whitespace-pre-wrap"
         style={
           isAssistant
             ? {
@@ -203,9 +203,9 @@ export default function QualificationPage() {
     <main className="relative min-h-screen flex flex-col" style={{ zIndex: 1 }}>
 
       {/* ── HERO ── */}
-      <section className="flex flex-col items-center text-center px-6 pt-14 pb-10">
+      <section className="flex flex-col items-center text-center px-6 pt-12 pb-10 md:pt-20 md:pb-14">
         {/* Medallion */}
-        <div className="mb-6" style={{ filter: "drop-shadow(0 0 20px rgba(201,162,39,0.25))" }}>
+        <div className="mb-6 md:mb-8" style={{ filter: "drop-shadow(0 0 20px rgba(201,162,39,0.25))" }}>
           <Medallion />
         </div>
 
@@ -219,7 +219,7 @@ export default function QualificationPage() {
 
         {/* Title */}
         <h1
-          className="gold-shimmer text-4xl md:text-6xl font-bold mb-4 leading-tight"
+          className="gold-shimmer text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight"
           style={{ fontFamily: "var(--font-cinzel)", letterSpacing: "0.06em" }}
         >
           Werde Pascha
@@ -227,7 +227,7 @@ export default function QualificationPage() {
 
         {/* Subtitle */}
         <p
-          className="text-lg md:text-xl italic max-w-sm"
+          className="text-lg md:text-xl lg:text-2xl italic max-w-sm md:max-w-md"
           style={{ color: "var(--text-muted)", fontFamily: "var(--font-crimson)", lineHeight: 1.8 }}
         >
           Für jene, die mehr als eine Mitgliedschaft suchen.
@@ -237,26 +237,26 @@ export default function QualificationPage() {
       </section>
 
       {/* ── DIVIDER ── */}
-      <div className="divider px-8 md:px-20 max-w-3xl mx-auto w-full mb-10">
+      <div className="divider px-8 md:px-20 max-w-3xl lg:max-w-4xl mx-auto w-full mb-10">
         ✦ ✦ ✦
       </div>
 
       {/* ── VIDEO ── */}
-      <section className="px-5 md:px-8 max-w-3xl mx-auto w-full mb-10">
+      <section className="px-5 md:px-8 max-w-3xl lg:max-w-4xl mx-auto w-full mb-10">
         <VideoPlaceholder />
       </section>
 
       {/* ── DIVIDER ── */}
-      <div className="divider px-8 md:px-20 max-w-3xl mx-auto w-full mb-10">
+      <div className="divider px-8 md:px-20 max-w-3xl lg:max-w-4xl mx-auto w-full mb-10">
         ✦ ✦ ✦
       </div>
 
       {/* ── CHAT SECTION ── */}
-      <section className="px-5 md:px-8 max-w-3xl mx-auto w-full pb-16">
+      <section className="px-5 md:px-8 max-w-3xl lg:max-w-4xl mx-auto w-full pb-16">
         {/* Section header */}
         <div className="text-center mb-8">
           <h2
-            className="text-2xl md:text-3xl mb-2"
+            className="text-2xl md:text-3xl lg:text-4xl mb-2"
             style={{
               fontFamily: "var(--font-cinzel)",
               color: "var(--gold-light)",
@@ -266,7 +266,7 @@ export default function QualificationPage() {
             Qualifizierungs-Gespräch
           </h2>
           <p
-            className="text-sm italic"
+            className="text-sm md:text-base italic"
             style={{ color: "var(--text-muted)", fontFamily: "var(--font-crimson)" }}
           >
             Vertraulich · Geführt von unserem Beirat-Assistenten
@@ -280,8 +280,8 @@ export default function QualificationPage() {
             background: "linear-gradient(160deg, rgba(17,14,24,0.98), rgba(10,8,16,0.98))",
             border: "1px solid rgba(201,162,39,0.2)",
             backdropFilter: "blur(20px)",
-            minHeight: "440px",
-            maxHeight: "580px",
+            minHeight: "clamp(440px, 60vh, 680px)",
+            maxHeight: "clamp(500px, 72vh, 800px)",
           }}
         >
           {/* Chat top bar */}
@@ -305,7 +305,7 @@ export default function QualificationPage() {
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto px-5 md:px-6 py-5 flex flex-col gap-5" style={{ minHeight: 0 }}>
+          <div className="flex-1 overflow-y-auto px-4 md:px-6 lg:px-8 py-5 md:py-6 flex flex-col gap-4 md:gap-5" style={{ minHeight: 0 }}>
             {messages.map((msg, i) => <ChatBubble key={i} msg={msg} />)}
 
             {loading && (
@@ -339,7 +339,7 @@ export default function QualificationPage() {
 
           {/* Input area */}
           <div
-            className="p-4 flex gap-3 items-end"
+            className="p-4 md:p-5 flex gap-3 items-end"
             style={{ borderTop: "1px solid rgba(201,162,39,0.1)" }}
           >
             {!started ? (
