@@ -13,6 +13,151 @@ const INITIAL_MESSAGE: Message = {
     "السلام عليكم ورحمة الله وبركاته\n\nWillkommen bei der Royal Ottoman Society. Ich freue mich, dass du den Weg zu uns gefunden hast.\n\nDieses Gespräch ist vertraulich und dient dazu, dich und deine Absichten besser kennenzulernen — damit wir verstehen, was dich bewegt und wie wir gemeinsam wachsen können.\n\nDarf ich fragen: Wie bist du auf die Royal Ottoman Society aufmerksam geworden?",
 };
 
+/* ── Medallion SVG ── */
+function Medallion() {
+  return (
+    <svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="45" cy="45" r="43" stroke="url(#gring)" strokeWidth="1.5" />
+      <circle cx="45" cy="45" r="36" stroke="rgba(201,162,39,0.25)" strokeWidth="0.5" />
+      <circle cx="45" cy="45" r="28" stroke="rgba(201,162,39,0.15)" strokeWidth="0.5" />
+      {/* 8-pointed star */}
+      <path
+        d="M45 14l4 12h12l-10 8 4 12-10-7-10 7 4-12-10-8h12z"
+        fill="url(#gstar)"
+        opacity="0.9"
+      />
+      <path
+        d="M45 76l-4-12H29l10-8-4-12 10 7 10-7-4 12 10 8H56z"
+        fill="url(#gstar)"
+        opacity="0.6"
+      />
+      <path
+        d="M14 45l12-4v-12l8 10 12-4-7 10 7 10-12-4-8 10v-12z"
+        fill="url(#gstar)"
+        opacity="0.6"
+      />
+      <path
+        d="M76 45l-12 4v12l-8-10-12 4 7-10-7-10 12 4 8-10v12z"
+        fill="url(#gstar)"
+        opacity="0.9"
+      />
+      {/* Center dot */}
+      <circle cx="45" cy="45" r="5" fill="url(#gcenter)" />
+      <circle cx="45" cy="45" r="2.5" fill="rgba(255,248,220,0.8)" />
+      <defs>
+        <linearGradient id="gring" x1="0" y1="0" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#8a6a18" />
+          <stop offset="0.5" stopColor="#e2c56a" />
+          <stop offset="1" stopColor="#8a6a18" />
+        </linearGradient>
+        <linearGradient id="gstar" x1="0" y1="0" x2="90" y2="90" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#c9a227" />
+          <stop offset="1" stopColor="#e8c84a" />
+        </linearGradient>
+        <radialGradient id="gcenter" cx="50%" cy="50%">
+          <stop stopColor="#e8c84a" />
+          <stop offset="1" stopColor="#c9a227" />
+        </radialGradient>
+      </defs>
+    </svg>
+  );
+}
+
+/* ── Video placeholder ── */
+function VideoPlaceholder() {
+  return (
+    <div
+      className="relative w-full rounded-2xl overflow-hidden flex items-center justify-center"
+      style={{
+        aspectRatio: "16/9",
+        background: "linear-gradient(145deg, #0d0912, #110e18)",
+        border: "1px solid rgba(201,162,39,0.2)",
+        boxShadow: "0 0 60px rgba(201,162,39,0.06), inset 0 0 60px rgba(0,0,0,0.5)",
+      }}
+    >
+      {/* Corner ornaments */}
+      {["top-3 left-3", "top-3 right-3", "bottom-3 left-3", "bottom-3 right-3"].map((pos, i) => (
+        <div
+          key={i}
+          className={`absolute ${pos} w-5 h-5`}
+          style={{
+            borderTop: i < 2 ? "1.5px solid rgba(201,162,39,0.4)" : "none",
+            borderBottom: i >= 2 ? "1.5px solid rgba(201,162,39,0.4)" : "none",
+            borderLeft: i % 2 === 0 ? "1.5px solid rgba(201,162,39,0.4)" : "none",
+            borderRight: i % 2 === 1 ? "1.5px solid rgba(201,162,39,0.4)" : "none",
+          }}
+        />
+      ))}
+
+      {/* Play button */}
+      <div className="flex flex-col items-center gap-4">
+        <div
+          className="w-16 h-16 rounded-full flex items-center justify-center"
+          style={{
+            background: "rgba(201,162,39,0.08)",
+            border: "1px solid rgba(201,162,39,0.25)",
+            boxShadow: "0 0 30px rgba(201,162,39,0.1)",
+          }}
+        >
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <polygon points="7,4 19,11 7,18" fill="rgba(201,162,39,0.7)" />
+          </svg>
+        </div>
+        <span
+          className="text-xs tracking-[0.4em] uppercase"
+          style={{ color: "rgba(201,162,39,0.3)", fontFamily: "var(--font-cinzel)" }}
+        >
+          Video folgt
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/* ── Chat bubble ── */
+function ChatBubble({ msg }: { msg: Message }) {
+  const isAssistant = msg.role === "assistant";
+  return (
+    <div className={`msg-appear flex ${isAssistant ? "justify-start" : "justify-end"} gap-2.5`}>
+      {isAssistant && (
+        <div
+          className="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-sm mt-0.5"
+          style={{
+            background: "linear-gradient(135deg, #1a1225, #0f0c18)",
+            border: "1px solid rgba(201,162,39,0.3)",
+            color: "var(--gold)",
+            boxShadow: "0 0 10px rgba(201,162,39,0.1)",
+          }}
+        >
+          ☽
+        </div>
+      )}
+      <div
+        className="max-w-[78%] px-4 py-3 text-base leading-relaxed whitespace-pre-wrap"
+        style={
+          isAssistant
+            ? {
+                background: "linear-gradient(135deg, rgba(26,18,37,0.9), rgba(17,14,24,0.95))",
+                border: "1px solid rgba(201,162,39,0.15)",
+                borderRadius: "4px 16px 16px 16px",
+                color: "var(--text-main)",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
+              }
+            : {
+                background: "linear-gradient(135deg, rgba(40,30,15,0.95), rgba(30,22,10,0.9))",
+                border: "1px solid rgba(201,162,39,0.2)",
+                borderRadius: "16px 4px 16px 16px",
+                color: "#ede0c0",
+              }
+        }
+      >
+        {msg.content}
+      </div>
+    </div>
+  );
+}
+
+/* ── Main Page ── */
 export default function QualificationPage() {
   const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
   const [input, setInput] = useState("");
@@ -28,33 +173,22 @@ export default function QualificationPage() {
   async function sendMessage() {
     const text = input.trim();
     if (!text || loading) return;
-
     const userMsg: Message = { role: "user", content: text };
     const newMessages = [...messages, userMsg];
     setMessages(newMessages);
     setInput("");
     setLoading(true);
-
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: newMessages }),
       });
-
-      if (!res.ok) throw new Error("API error");
-
+      if (!res.ok) throw new Error();
       const data = await res.json();
       setMessages([...newMessages, { role: "assistant", content: data.content }]);
     } catch {
-      setMessages([
-        ...newMessages,
-        {
-          role: "assistant",
-          content:
-            "Es gab einen technischen Fehler. Bitte versuche es erneut.",
-        },
-      ]);
+      setMessages([...newMessages, { role: "assistant", content: "Es gab einen technischen Fehler. Bitte versuche es erneut." }]);
     } finally {
       setLoading(false);
       setTimeout(() => inputRef.current?.focus(), 100);
@@ -62,143 +196,137 @@ export default function QualificationPage() {
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      sendMessage();
-    }
+    if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); }
   }
 
   return (
-    <main className="min-h-screen flex flex-col" style={{ background: "var(--dark)" }}>
-      {/* Header */}
-      <header className="text-center pt-10 pb-6 px-4">
+    <main className="relative min-h-screen flex flex-col" style={{ zIndex: 1 }}>
+
+      {/* ── HERO ── */}
+      <section className="flex flex-col items-center text-center px-6 pt-14 pb-10">
+        {/* Medallion */}
+        <div className="mb-6" style={{ filter: "drop-shadow(0 0 20px rgba(201,162,39,0.25))" }}>
+          <Medallion />
+        </div>
+
+        {/* Label */}
         <p
-          className="text-xs tracking-[0.3em] uppercase mb-3"
-          style={{ color: "var(--gold)", opacity: 0.7 }}
+          className="text-xs tracking-[0.45em] uppercase mb-4"
+          style={{ color: "var(--gold-dim)", fontFamily: "var(--font-cinzel)" }}
         >
           Royal Ottoman Society
         </p>
+
+        {/* Title */}
         <h1
-          className="text-3xl md:text-5xl font-bold mb-3"
-          style={{
-            color: "var(--gold)",
-            textShadow: "0 0 40px rgba(201,162,39,0.3)",
-            letterSpacing: "0.05em",
-          }}
+          className="gold-shimmer text-4xl md:text-6xl font-bold mb-4 leading-tight"
+          style={{ fontFamily: "var(--font-cinzel)", letterSpacing: "0.06em" }}
         >
           Werde Pascha
         </h1>
-        <p className="text-sm md:text-base max-w-md mx-auto" style={{ color: "#a89060", lineHeight: 1.7 }}>
+
+        {/* Subtitle */}
+        <p
+          className="text-lg md:text-xl italic max-w-sm"
+          style={{ color: "var(--text-muted)", fontFamily: "var(--font-crimson)", lineHeight: 1.8 }}
+        >
           Für jene, die mehr als eine Mitgliedschaft suchen.
           <br />
           Eine Berufung.
         </p>
-      </header>
-
-      {/* Ornament */}
-      <div className="ornament px-8 md:px-16 mb-8 text-sm" style={{ color: "var(--gold)" }}>
-        ✦
-      </div>
-
-      {/* Video Section */}
-      <section className="px-4 md:px-8 max-w-3xl mx-auto w-full mb-10">
-        <div
-          className="relative w-full rounded-xl overflow-hidden flex items-center justify-center"
-          style={{
-            background: "#0d0a06",
-            border: "1px solid var(--dark-border)",
-            aspectRatio: "16/9",
-          }}
-        >
-          {/* Placeholder — replace src with real video URL */}
-          <div className="flex flex-col items-center gap-3" style={{ color: "#4a3520" }}>
-            <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-              <circle cx="32" cy="32" r="30" stroke="#2a1f10" strokeWidth="2" />
-              <polygon points="26,20 50,32 26,44" fill="#3a2a14" />
-            </svg>
-            <span className="text-xs tracking-widest uppercase" style={{ color: "#3a2a14" }}>
-              Video folgt
-            </span>
-          </div>
-        </div>
       </section>
 
-      {/* Ornament */}
-      <div className="ornament px-8 md:px-16 mb-8 text-sm" style={{ color: "var(--gold)" }}>
-        ✦
+      {/* ── DIVIDER ── */}
+      <div className="divider px-8 md:px-20 max-w-3xl mx-auto w-full mb-10">
+        ✦ ✦ ✦
       </div>
 
-      {/* Chat Section */}
-      <section className="flex-1 px-4 md:px-8 max-w-3xl mx-auto w-full pb-12">
-        <div className="text-center mb-6">
-          <h2 className="text-xl md:text-2xl mb-2" style={{ color: "var(--gold-light)", letterSpacing: "0.05em" }}>
+      {/* ── VIDEO ── */}
+      <section className="px-5 md:px-8 max-w-3xl mx-auto w-full mb-10">
+        <VideoPlaceholder />
+      </section>
+
+      {/* ── DIVIDER ── */}
+      <div className="divider px-8 md:px-20 max-w-3xl mx-auto w-full mb-10">
+        ✦ ✦ ✦
+      </div>
+
+      {/* ── CHAT SECTION ── */}
+      <section className="px-5 md:px-8 max-w-3xl mx-auto w-full pb-16">
+        {/* Section header */}
+        <div className="text-center mb-8">
+          <h2
+            className="text-2xl md:text-3xl mb-2"
+            style={{
+              fontFamily: "var(--font-cinzel)",
+              color: "var(--gold-light)",
+              letterSpacing: "0.06em",
+            }}
+          >
             Qualifizierungs-Gespräch
           </h2>
-          <p className="text-xs" style={{ color: "#7a6040" }}>
+          <p
+            className="text-sm italic"
+            style={{ color: "var(--text-muted)", fontFamily: "var(--font-crimson)" }}
+          >
             Vertraulich · Geführt von unserem Beirat-Assistenten
           </p>
         </div>
 
-        {/* Chat Box */}
+        {/* Chat card */}
         <div
-          className="rounded-2xl overflow-hidden flex flex-col"
+          className="card-glow rounded-2xl overflow-hidden flex flex-col"
           style={{
-            background: "var(--dark-card)",
-            border: "1px solid var(--dark-border)",
-            minHeight: "420px",
-            maxHeight: "560px",
+            background: "linear-gradient(160deg, rgba(17,14,24,0.98), rgba(10,8,16,0.98))",
+            border: "1px solid rgba(201,162,39,0.2)",
+            backdropFilter: "blur(20px)",
+            minHeight: "440px",
+            maxHeight: "580px",
           }}
         >
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-5 md:p-6 flex flex-col gap-4" style={{ minHeight: 0 }}>
-            {messages.map((msg, i) => (
-              <div
-                key={i}
-                className={`msg-appear flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
-              >
-                {msg.role === "assistant" && (
-                  <div
-                    className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs mr-2 mt-1"
-                    style={{ background: "#1e1508", border: "1px solid var(--dark-border)", color: "var(--gold)" }}
-                  >
-                    ☽
-                  </div>
-                )}
-                <div
-                  className="max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed whitespace-pre-wrap"
-                  style={
-                    msg.role === "assistant"
-                      ? {
-                          background: "#1a1108",
-                          border: "1px solid #2a1f10",
-                          color: "#d4c4a0",
-                          borderTopLeftRadius: "4px",
-                        }
-                      : {
-                          background: "#1e1a08",
-                          border: "1px solid #3a3010",
-                          color: "#e8d9b5",
-                          borderTopRightRadius: "4px",
-                        }
-                  }
-                >
-                  {msg.content}
-                </div>
-              </div>
-            ))}
+          {/* Chat top bar */}
+          <div
+            className="flex items-center gap-3 px-5 py-3.5"
+            style={{
+              borderBottom: "1px solid rgba(201,162,39,0.1)",
+              background: "rgba(201,162,39,0.03)",
+            }}
+          >
+            <div
+              className="w-2 h-2 rounded-full"
+              style={{ background: "var(--gold)", boxShadow: "0 0 6px rgba(201,162,39,0.8)" }}
+            />
+            <span
+              className="text-xs tracking-widest uppercase"
+              style={{ color: "var(--gold-dim)", fontFamily: "var(--font-cinzel)" }}
+            >
+              Privates Gespräch
+            </span>
+          </div>
 
-            {/* Typing indicator */}
+          {/* Messages */}
+          <div className="flex-1 overflow-y-auto px-5 md:px-6 py-5 flex flex-col gap-5" style={{ minHeight: 0 }}>
+            {messages.map((msg, i) => <ChatBubble key={i} msg={msg} />)}
+
             {loading && (
-              <div className="msg-appear flex justify-start">
+              <div className="msg-appear flex justify-start gap-2.5">
                 <div
-                  className="w-7 h-7 rounded-full flex-shrink-0 flex items-center justify-center text-xs mr-2 mt-1"
-                  style={{ background: "#1e1508", border: "1px solid var(--dark-border)", color: "var(--gold)" }}
+                  className="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-sm"
+                  style={{
+                    background: "linear-gradient(135deg, #1a1225, #0f0c18)",
+                    border: "1px solid rgba(201,162,39,0.3)",
+                    color: "var(--gold)",
+                  }}
                 >
                   ☽
                 </div>
                 <div
-                  className="rounded-2xl px-4 py-4 flex gap-1 items-center"
-                  style={{ background: "#1a1108", border: "1px solid #2a1f10", borderTopLeftRadius: "4px" }}
+                  className="px-4 py-4 flex gap-1.5 items-center"
+                  style={{
+                    background: "rgba(26,18,37,0.9)",
+                    border: "1px solid rgba(201,162,39,0.12)",
+                    borderRadius: "4px 16px 16px 16px",
+                  }}
                 >
                   <span className="dot-1 w-1.5 h-1.5 rounded-full" style={{ background: "var(--gold)" }} />
                   <span className="dot-2 w-1.5 h-1.5 rounded-full" style={{ background: "var(--gold)" }} />
@@ -209,18 +337,21 @@ export default function QualificationPage() {
             <div ref={chatEndRef} />
           </div>
 
-          {/* Input */}
+          {/* Input area */}
           <div
             className="p-4 flex gap-3 items-end"
-            style={{ borderTop: "1px solid var(--dark-border)" }}
+            style={{ borderTop: "1px solid rgba(201,162,39,0.1)" }}
           >
             {!started ? (
               <button
-                className="w-full py-3 rounded-xl text-sm font-medium tracking-wide transition-all"
+                className="w-full py-3.5 rounded-xl text-sm tracking-[0.15em] uppercase transition-all hover:brightness-110 active:scale-[0.99]"
                 style={{
-                  background: "linear-gradient(135deg, #c9a227, #8a6a10)",
+                  background: "linear-gradient(135deg, #c9a227 0%, #a07d18 50%, #c9a227 100%)",
+                  backgroundSize: "200% auto",
                   color: "#0a0705",
-                  letterSpacing: "0.1em",
+                  fontFamily: "var(--font-cinzel)",
+                  fontWeight: 600,
+                  boxShadow: "0 4px 20px rgba(201,162,39,0.25), inset 0 1px 0 rgba(255,255,255,0.1)",
                 }}
                 onClick={() => setStarted(true)}
               >
@@ -233,18 +364,21 @@ export default function QualificationPage() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Schreibe deine Antwort..."
+                  placeholder="Deine Antwort…"
                   rows={1}
                   autoFocus
-                  className="flex-1 resize-none text-sm py-2.5 px-4 rounded-xl outline-none"
+                  className="flex-1 resize-none py-3 px-4 rounded-xl outline-none text-base transition-all"
                   style={{
-                    background: "#0f0c06",
-                    border: "1px solid #2a1f10",
-                    color: "#e8d9b5",
+                    background: "rgba(255,255,255,0.03)",
+                    border: "1px solid rgba(201,162,39,0.15)",
+                    color: "var(--text-main)",
+                    fontFamily: "var(--font-crimson)",
+                    fontSize: "1rem",
                     lineHeight: 1.6,
                     maxHeight: "120px",
-                    fontFamily: "inherit",
                   }}
+                  onFocus={(e) => (e.currentTarget.style.border = "1px solid rgba(201,162,39,0.4)")}
+                  onBlur={(e) => (e.currentTarget.style.border = "1px solid rgba(201,162,39,0.15)")}
                   onInput={(e) => {
                     const t = e.currentTarget;
                     t.style.height = "auto";
@@ -254,14 +388,17 @@ export default function QualificationPage() {
                 <button
                   onClick={sendMessage}
                   disabled={loading || !input.trim()}
-                  className="rounded-xl px-4 py-2.5 text-sm font-medium transition-all flex-shrink-0"
+                  className="rounded-xl px-5 py-3 text-sm font-medium transition-all flex-shrink-0 flex items-center gap-2"
                   style={{
                     background:
                       loading || !input.trim()
-                        ? "#2a1f10"
-                        : "linear-gradient(135deg, #c9a227, #8a6a10)",
-                    color: loading || !input.trim() ? "#5a4a30" : "#0a0705",
+                        ? "rgba(201,162,39,0.05)"
+                        : "linear-gradient(135deg, #c9a227, #a07d18)",
+                    color: loading || !input.trim() ? "rgba(201,162,39,0.3)" : "#080604",
+                    border: "1px solid rgba(201,162,39,0.2)",
                     cursor: loading || !input.trim() ? "not-allowed" : "pointer",
+                    fontFamily: "var(--font-cinzel)",
+                    boxShadow: loading || !input.trim() ? "none" : "0 4px 15px rgba(201,162,39,0.2)",
                   }}
                 >
                   Senden
@@ -271,9 +408,10 @@ export default function QualificationPage() {
           </div>
         </div>
 
+        {/* Footer note */}
         <p
-          className="text-center text-xs mt-4"
-          style={{ color: "#4a3a20", lineHeight: 1.8 }}
+          className="text-center text-xs mt-5 italic leading-relaxed"
+          style={{ color: "rgba(154,136,96,0.5)", fontFamily: "var(--font-crimson)" }}
         >
           Deine Antworten werden vertraulich behandelt und nur intern verwendet.
           <br />
